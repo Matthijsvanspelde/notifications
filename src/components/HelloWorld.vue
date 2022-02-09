@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1>{{ counter }}</h1>
+    <input type="Button" value="Increment" @click="subscribe">
   </div>
 </template>
 
@@ -8,8 +9,27 @@
 export default {
   name: 'HelloWorld',
   props: {
-    msg: String
+    msg: String,
+  },
+
+  data: function () {
+    return {
+      counter: 0
+    }
+  },
+
+  methods: {
+    subscribe: function() {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ topicName: "projects/theta-ember-340812/topics/GmailTrigger", labelIds: ["INBOX"] })
+        };
+    fetch("https://www.googleapis.com/gmail/v1/matthijsvanspelde1999@gmail.com/me/watch", requestOptions)
+      .then(response => console.log(response));
+    }
   }
+
 }
 </script>
 
